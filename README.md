@@ -7,7 +7,8 @@ A Python data pipeline that processes **time-series sensor data** recorded on a 
 - **where** soil resistance is higher or lower within the tillage depth (vibration layer, whole field)
 - **at what depth** a hardpan starts at each measured point (penetrometer layer)
 
-<!-- DROP map_overview.png HERE (delete this line after the image link appears) -->
+<img width="644" height="412" alt="image" src="https://github.com/user-attachments/assets/baf2e4eb-0692-4ede-ad36-12b2aca311e1" />
+
 
 *Screenshot of the generated map (2022 field season): vibration grid (green = low, red = high median RMS), penetrometer points labeled with hardpan top depth, and the popup of one insertion with its cone-index-vs-depth profile. The interactive HTML file is not published because it embeds the field data.*
 
@@ -40,7 +41,8 @@ The vibration layer describes the soil the shank works in; the penetrometer laye
 
 ## 2. Pipeline
 
-<!-- DROP pipeline.png HERE (delete this line after the image link appears) -->
+<img width="1671" height="941" alt="image" src="https://github.com/user-attachments/assets/198b191a-acc7-4728-9775-5284b45e10b9" />
+
 
 The vibration/GPS branch (Steps 1–4) and the penetrometer branch (Step 5) are processed independently and meet at validation (Step 6).
 
@@ -63,23 +65,23 @@ Each vibration value is placed on the map by its GPS position, so position quali
 
 **State and motion model** (constant velocity, Δt = 0.1 s):
 
-$$
+```math
 \mathbf{x}_k = \begin{bmatrix} p_x & p_y & v_x & v_y \end{bmatrix}^T ,
 \qquad
 \mathbf{x}_{k+1} = \mathbf{F}\,\mathbf{x}_k + \mathbf{w}_k ,
 \qquad
 \mathbf{F} = \begin{bmatrix} 1 & 0 & \Delta t & 0 \\ 0 & 1 & 0 & \Delta t \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}
-$$
+```
 
 **Measurement model** (GPS measures position):
 
-$$
+```math
 \mathbf{z}_k = \mathbf{H}\,\mathbf{x}_k + \mathbf{v}_k ,
 \qquad
 \mathbf{H} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \end{bmatrix},
 \qquad
 \mathbf{R} = \sigma_{GPS}^2\,\mathbf{I}
-$$
+```
 
 **Noise settings**
 - **Process noise Q:** discrete white-noise-acceleration model, σₐ = 0.5 m/s², matching the slow, smooth motion of a tractor.
