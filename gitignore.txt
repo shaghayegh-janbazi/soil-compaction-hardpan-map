@@ -1,0 +1,5 @@
+# field data and generated outputs (contain data)
+data/
+*.csv
+*.html
+__pycache__/
